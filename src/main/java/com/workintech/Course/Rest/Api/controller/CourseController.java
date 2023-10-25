@@ -5,6 +5,7 @@ import com.workintech.Course.Rest.Api.dto.CourseResponseFactory;
 import com.workintech.Course.Rest.Api.entity.Course;
 import com.workintech.Course.Rest.Api.entity.CourseGpa;
 import com.workintech.Course.Rest.Api.exceptions.CourseException;
+import com.workintech.Course.Rest.Api.exceptions.CourseValidation;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -53,14 +54,16 @@ public void init(){
 
 @PostMapping("/")
     public CourseResponse save(@RequestBody Course course){
-    //TODO VALIDATION
+    CourseValidation.isIdValid(course.getId());
+    CourseValidation.checkCourseIsValid(course);
+    CourseValidation.isDuplicateNameFound(courses, course.getName());
 courses.add(course);
   return   CourseResponseFactory.createCourseResponse(course, low, medium, high);
 }
 
 @PutMapping("/{id}")
     public Course update(@RequestBody Course course, @PathVariable int id){
-    //TODO VAlidation
+    CourseValidation.checkCourseIsValid(course);
 
     Optional<Course> optionalCourse = courses.stream()
             .filter(course1 -> course1.getId() == id).findFirst();

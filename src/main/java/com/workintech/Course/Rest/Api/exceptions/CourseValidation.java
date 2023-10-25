@@ -1,7 +1,7 @@
 package com.workintech.Course.Rest.Api.exceptions;
 
 import com.workintech.Course.Rest.Api.entity.Course;
-import com.workintech.Course.Rest.Api.exceptions.CourseException;
+
 import org.springframework.http.HttpStatus;
 
 import java.util.List;
